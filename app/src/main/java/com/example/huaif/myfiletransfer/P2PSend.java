@@ -111,6 +111,78 @@ public class P2PSend {
 
     }
 
+    public void startShitDownload(String filename,int selectedLen) {
+        File file = new File(filename);
+        byte[] sourceBytes = new byte[factSpace];
+        byte[] destinationBytes;
+        int readLength;
+        int startPosition;
+        int endPosition = -1;
+        ServerSocket ss = null;
+        Socket s = null;
+        DataOutputStream dos = null;
+        FileInputStream fis = null;
+
+
+        try {
+            ss = new ServerSocket(port);
+            s = ss.accept();
+
+            dos = new DataOutputStream(s.getOutputStream());
+            dos.writeUTF(file.getName());
+            dos.flush();
+            dos.writeLong(file.length());
+            dos.flush();
+
+
+            /*
+             *接收方已经连接上并准备开始接收文件，将pds撤销，并显示pd
+             * 表示发送进度
+             */
+            pds.dismiss();
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.setTitle("正在发送");
+            pd.setMax(((int) file.length() / factSpace) + 1);
+            UIWiget obj = new UIWiget(pd, pds);
+            Message msg = mainHandler.obtainMessage(1, 1, 1, obj);
+            mainHandler.sendMessage(msg);
+
+            fis = new FileInputStream(file);
+            int sentCount = 0;
+            while ((readLength = fis.read(sourceBytes, 0, factSpace)) > 0&&sentCount<=selectedLen) {
+                startPosition = endPosition + 1;
+                endPosition = startPosition + readLength - 1;
+                destinationBytes = slice(sourceBytes, startPosition, endPosition);
+                dos.write(destinationBytes, 0, perChipSpace);
+                dos.flush();
+                sentCount++;
+                pd.setProgress(sentCount);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+                dos.close();
+                s.close();
+                ss.close();
+
+                pd.dismiss();
+
+                /*
+                * 弹出Toast，提示文件发送完成.
+                * */
+                Context obj = context;
+                Message msg = mainHandler.obtainMessage(2, 1, 1, obj);
+                mainHandler.sendMessage(msg);
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+
+    }
+
 
     public byte[] slice(byte[] bytes, int startPosition, int endPosition) {
 
