@@ -65,6 +65,7 @@ public class P2PReceive {
 
 
             //连接上服务器，将pds撤销，并显示pd表示下载进度。
+            pds.dismiss();
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             pd.setTitle("正在接收");
             UIWiget obj=new UIWiget(pd,pds);

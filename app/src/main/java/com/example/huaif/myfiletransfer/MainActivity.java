@@ -27,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity
     private EHandler mainHandler = new EHandler(mainLooper);
     private FloatingActionButton actionA, actionB;
     private FloatingActionsMenu menu;
-
 
 
     private String filePath = null;
@@ -48,8 +49,7 @@ public class MainActivity extends AppCompatActivity
 
         actionA = (FloatingActionButton) findViewById(R.id.action_a);
         actionB = (FloatingActionButton) findViewById(R.id.action_b);
-        menu=(FloatingActionsMenu)findViewById(R.id.fam);
-
+        menu = (FloatingActionsMenu) findViewById(R.id.fam);
 
 
         OnCreateFragment ocf = new OnCreateFragment();
@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_p2pMode) {
@@ -161,6 +160,45 @@ public class MainActivity extends AppCompatActivity
             menu.collapse();
             actionA.setTitle("我要分享");
             actionB.setTitle("我要下载");
+            actionA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final ProgressDialog pd = new ProgressDialog(MainActivity.this);
+                    final ProgressDialog pds = new ProgressDialog(MainActivity.this);
+                    pds.setTitle("提醒");
+                    pds.setMessage("正在等待对方下载");
+                    pds.show();
+                    Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            CSShare csShare = new CSShare(mainHandler, pd, pds, getApplicationContext());
+                            csShare.startDownload();
+                        }
+                    };
+                    thread.start();
+                }
+            });
+            actionB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final ProgressDialog pd = new ProgressDialog(MainActivity.this);
+                    final ProgressDialog pds = new ProgressDialog(MainActivity.this);
+                    pds.setTitle("提醒");
+                    pds.setMessage("正在等待对方分享");
+                    pds.show();
+                    Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            CSDownload csDownload = new CSDownload(mainHandler, pd, pds, getApplicationContext());
+                            ArrayList<String> fileNames = csDownload.getFilesName();
+                            Intent intent = new Intent(MainActivity.this, ShowFilesActivity.class);
+                            intent.putStringArrayListExtra("fileNames",fileNames);
+                            startActivity(intent);
+                        }
+                    };
+                    thread.start();
+                }
+            });
 
         } else if (id == R.id.nav_advance) {
 

@@ -67,6 +67,7 @@ public class P2PSend {
              *接收方已经连接上并准备开始接收文件，将pds撤销，并显示pd
              * 表示发送进度
              */
+            pds.dismiss();
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             pd.setTitle("正在发送");
             pd.setMax(((int) file.length() / factSpace) + 1);
