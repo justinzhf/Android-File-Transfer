@@ -25,13 +25,6 @@ public class P2PReceive {
     private ProgressDialog pds = null;
     private Context context = null;
 
-    public P2PReceive(EHandler mainHandler, ProgressDialog pd, ProgressDialog pds, Context context) {
-        this.mainHandler = mainHandler;
-        this.pd = pd;
-        this.pds = pds;
-        this.context = context;
-    }
-
     //每个分片的大小
     private int perChipSpace = 256;
 
@@ -41,6 +34,13 @@ public class P2PReceive {
 
     //每个分片中实际最多用来存放文件信息的字节数
     private int factSpace = perChipSpace - ID.getBytes().length - name.getBytes().length - 1 - 8;
+
+    public P2PReceive(EHandler mainHandler, ProgressDialog pd, ProgressDialog pds, Context context) {
+        this.mainHandler = mainHandler;
+        this.pd = pd;
+        this.pds = pds;
+        this.context = context;
+    }
 
     public void startDownload() {
         boolean connected = false;

@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager = getFragmentManager();
     private Looper mainLooper = Looper.getMainLooper();
     private EHandler mainHandler = new EHandler(mainLooper);
-    FloatingActionButton actionA, actionB;
+    private FloatingActionButton actionA, actionB;
+    private FloatingActionsMenu menu;
+
 
 
     private String filePath = null;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity
 
         actionA = (FloatingActionButton) findViewById(R.id.action_a);
         actionB = (FloatingActionButton) findViewById(R.id.action_b);
+        menu=(FloatingActionsMenu)findViewById(R.id.fam);
+
 
 
         OnCreateFragment ocf = new OnCreateFragment();
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_p2pMode) {
+            menu.collapse();
             final P2PFragment p2pFragment = new P2PFragment();
             actionA.setTitle("我要发送");
             actionB.setTitle("我要接收");
@@ -141,7 +146,7 @@ public class MainActivity extends AppCompatActivity
                     Thread thread = new Thread() {
                         @Override
                         public void run() {
-                            P2PReceive p2pReceive = new P2PReceive(mainHandler, pds, pd, getApplicationContext());
+                            P2PReceive p2pReceive = new P2PReceive(mainHandler, pd, pds, getApplicationContext());
                             p2pReceive.startDownload();
                         }
                     };
@@ -153,6 +158,9 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_csMode) {
+            menu.collapse();
+            actionA.setTitle("我要分享");
+            actionB.setTitle("我要下载");
 
         } else if (id == R.id.nav_advance) {
 
