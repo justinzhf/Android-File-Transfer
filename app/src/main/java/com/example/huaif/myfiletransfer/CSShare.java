@@ -29,7 +29,7 @@ public class CSShare {
     private String name = "zhf";
 
     private int port = 7777;
-    private String sharedDir = "/storage/sdcard0/myFileTransfer";
+    private String sharedDir = "/storage/sdcard0/AMyFileTransfer";
 
     //每个分片中实际最多用来存放文件信息的字节数
     private int factSpace = perChipSpace - ID.getBytes().length - name.getBytes().length - 1 - 8;

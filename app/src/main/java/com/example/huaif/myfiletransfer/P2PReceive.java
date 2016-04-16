@@ -17,7 +17,7 @@ public class P2PReceive {
 
     private String host = "192.168.43.1";
     private int port = 7777;
-    private String fileDir = "/storage/sdcard0/myFileTransfer/receive";
+    private String fileDir = "/storage/sdcard0/AMyFileTransfer/receive";
 
     //更新UI的控件
     private EHandler mainHandler = null;

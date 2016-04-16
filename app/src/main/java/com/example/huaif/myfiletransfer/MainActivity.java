@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private EHandler mainHandler = new EHandler(mainLooper);
     private FloatingActionButton actionA, actionB;
     private FloatingActionsMenu menu;
-
+    private String sharedDir = "/storage/sdcard0/AMyFileTransfer";
 
     private String filePath = null;
 
@@ -59,11 +59,27 @@ public class MainActivity extends AppCompatActivity
         actionB = (FloatingActionButton) findViewById(R.id.action_b);
         menu = (FloatingActionsMenu) findViewById(R.id.fam);
 
+        actionA.setColorNormalResId(R.color.pink);
+        actionA.setColorPressedResId(R.color.pink_pressed);
+        actionB.setColorNormalResId(R.color.colorPrimary);
+        actionB.setColorPressedResId(R.color.colorPrimaryDark);
+        menu.setEnabled(false);
 
-        OnCreateFragment ocf = new OnCreateFragment();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.content_main, ocf);
-        ft.commit();
+
+
+        File file = new File(sharedDir);
+        if (!file.exists() && !file.isDirectory()) {
+            file.mkdir();
+        }
+        File file1 = new File(sharedDir + "/share");
+        if (!file1.exists() && !file1.isDirectory()) {
+            file1.mkdir();
+        }
+
+        File file2 = new File(sharedDir + "/receive");
+        if (!file2.exists() && !file2.isDirectory()) {
+            file2.mkdir();
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -128,9 +144,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -139,6 +152,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        menu.setEnabled(true);
+        TextView tv_init=(TextView)findViewById(R.id.tv_init);
+        tv_init.setText("");
 
         if (id == R.id.nav_p2pMode) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -317,9 +333,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

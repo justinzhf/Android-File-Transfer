@@ -4,33 +4,22 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_p2pMode"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@android:drawable/ic_menu_send"
             android:title="P2P模式" />
         <item
             android:id="@+id/nav_csMode"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@android:drawable/ic_menu_share"
             android:title="CS模式" />
         <item
             android:id="@+id/nav_advance"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@android:drawable/ic_menu_compass"
             android:title="高级" />
         <item
             android:id="@+id/nav_other"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@android:drawable/ic_menu_more"
             android:title="其他" />
     </group>
 
-    <item android:title="关于">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+
 
 </menu>
