@@ -1,5 +1,5 @@
 # Android-File-Transfer
-An Android App which transfer files through WIFI
+An Android App which transfers files through WIFI
 ##Develop Environment##
 * IDEA
 * JDK1.8
