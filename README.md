@@ -1,11 +1,11 @@
 # Android-File-Transfer
 An Android App which transfers files through WIFI
-##Develop Environment##
+## Develop Environment
 * IDEA
 * JDK1.8
 * Windows 10
 
-##How To Use##
+## How To Use
 include 3 modes.*CSMode*,*P2PMode* and *Advance*.
 * CSMode
 
@@ -24,4 +24,4 @@ include 3 modes.*CSMode*,*P2PMode* and *Advance*.
 
   Just ingnore this.
   
-###hope you enjoy it.###
+### hope you enjoy it.
